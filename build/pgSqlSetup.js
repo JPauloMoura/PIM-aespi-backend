@@ -18,7 +18,7 @@ class CreateTable extends BaseDataBase_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield BaseDataBase_1.default.connection.raw(`
-             CREATE TABLE IF NOT EXISTS pupils(
+             CREATE TABLE IF NOT EXISTS students(
                  id VARCHAR(255) PRIMARY KEY,
                  email VARCHAR(255) NOT NULL UNIQUE,
                  password VARCHAR(255) NOT NULL,
@@ -41,7 +41,7 @@ class CreateTable extends BaseDataBase_1.default {
             );
          `);
                 yield BaseDataBase_1.default.connection.raw(`
-            CREATE TYPE TYPE_USER AS ENUM ('pupils','teaches');
+            CREATE TYPE TYPE_USER AS ENUM ('students','teaches');
             CREATE TABLE IF NOT EXISTS questionnaires(
                 id VARCHAR(255) PRIMARY KEY,
                 question TEXT NOT NULL UNIQUE,
