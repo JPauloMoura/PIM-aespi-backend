@@ -4,7 +4,7 @@ class CreateTable extends BaseDataBase{
    async createTables(){
       try {
          await BaseDataBase.connection.raw(`
-             CREATE TABLE pupils(
+             CREATE TABLE IF NOT EXISTS pupils(
                  id VARCHAR(255) PRIMARY KEY,
                  email VARCHAR(255) NOT NULL UNIQUE,
                  password VARCHAR(255) NOT NULL,
@@ -13,16 +13,16 @@ class CreateTable extends BaseDataBase{
          `)
    
          await BaseDataBase.connection.raw(`
-            CREATE TABLE teaches(
+            CREATE TABLE IF NOT EXISTS teaches(
                 id VARCHAR(255) PRIMARY KEY,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
                 questionnaire_answered BOOLEAN DEFAULT false
             );
          `)
-         
+
          await BaseDataBase.connection.raw(`
-            CREATE TABLE admin(
+            CREATE TABLE IF NOT EXISTS admin(
                 id VARCHAR(255) PRIMARY KEY,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL
@@ -31,16 +31,16 @@ class CreateTable extends BaseDataBase{
 
          await BaseDataBase.connection.raw(`
             CREATE TYPE TYPE_USER AS ENUM ('pupils','teaches');
-            CREATE TABLE questionnaires(
+            CREATE TABLE IF NOT EXISTS questionnaires(
                 id VARCHAR(255) PRIMARY KEY,
                 question TEXT NOT NULL UNIQUE,
-                type_user TYPE_USER NOT NULL
+                t_user TYPE_USER NOT NULL
             );
          `)
 
          await BaseDataBase.connection.raw(`
             CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'bad', 'very bad');
-            CREATE TABLE evaluative_report(
+            CREATE TABLE IF NOT EXISTS evaluative_report(
                 id_question VARCHAR(255) NOT NULL,
                 response TYPE_RESPONSE NOT NULL
             );
