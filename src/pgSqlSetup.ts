@@ -42,7 +42,8 @@ class CreateTable extends BaseDataBase{
             CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'bad', 'very bad');
             CREATE TABLE IF NOT EXISTS evaluative_report(
                 id_question VARCHAR(255) NOT NULL,
-                response TYPE_RESPONSE NOT NULL
+                response TYPE_RESPONSE NOT NULL,
+                FOREIGN KEY (id_question) REFERENCES questionnaires(id)
             );
          `)
    
