@@ -11,3 +11,8 @@ export class Student {
     public getPassword = () => this.password
     public getQuestionnaireAnswered = () => this.questionnaireAnswered
 }
+
+export interface inputNewStudent {
+    email:string,
+    password: string
+}
