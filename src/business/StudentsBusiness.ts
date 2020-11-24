@@ -37,6 +37,37 @@ class StudentsBusiness {
         }
     }
 
+    public async login (login:inputStudent): Promise<string> {
+        try {
+
+            if (!login.email || !login.password) {
+                throw new Error('"email" and "password" must be provided')
+            }
+            if(!EmailValidator.check(login.email)){
+                throw new Error('Invalid email')
+            }
+       
+            const result = await studentsDataBase.getStudentByEmail(login.email)
+       
+            if (!result) throw new Error("Invalid credentials")
+       
+            const student: Student = new Student (
+              result.id,
+              result.email,
+              result.password,
+              result.questionnaireAnswered
+            )
+       
+            const passwordIsCorrect: boolean = await hashManage.compare(login.password, student.getPassword())
+       
+            if (!passwordIsCorrect) throw new Error("Invalid credentials")
+       
+            return Authenticator.generateToken({id: student.getId()})
+    
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 
 export default new StudentsBusiness()
