@@ -17,7 +17,8 @@ class StudentsBusiness {
             const student: Student = new Student(
                 IdGenerator.generateId(),
                 signup.email,
-                cypherPassword
+                cypherPassword,
+                false
             )
     
             await studentsDataBase.createStudent(student)
