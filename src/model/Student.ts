@@ -12,7 +12,7 @@ export class Student {
     public getQuestionnaireAnswered = () => this.questionnaireAnswered
 }
 
-export interface inputNewStudent {
+export interface inputStudent {
     email:string,
     password: string
 }
