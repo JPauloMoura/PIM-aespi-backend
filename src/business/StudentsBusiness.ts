@@ -1,12 +1,12 @@
 import { studentsDataBase } from "../data/StudentsDataBase";
-import { inputNewStudent, Student } from "../model/Student";
+import { inputStudent, Student } from "../model/Student";
 import Authenticator from "../services/Authenticator";
 import EmailValidator from "../services/EmailValidator";
 import { hashManage } from "../services/HashManage";
 import IdGenerator from "../services/IdGenerator";
 
 class StudentsBusiness {
-    public async signup (signup:inputNewStudent): Promise<string> {
+    public async signup (signup:inputStudent): Promise<string> {
         try {
     
             if (!signup.email || !signup.password) {

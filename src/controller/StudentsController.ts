@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import StudentsBusiness from "../business/StudentsBusiness"
-import { inputNewStudent } from "../model/Student"
+import { inputStudent } from "../model/Student"
 
 class StudentsController {
     async signup (req: Request, res: Response): Promise<void> {
@@ -8,7 +8,7 @@ class StudentsController {
     
             let message = "Success!"
     
-            const signup: inputNewStudent = {
+            const signup: inputStudent = {
                 email: req.body.email as string,
                 password: req.body.password as string
             }
