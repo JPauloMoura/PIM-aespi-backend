@@ -1,6 +1,7 @@
 import { studentsDataBase } from "../data/StudentsDataBase";
 import { inputNewStudent, Student } from "../model/Student";
 import Authenticator from "../services/Authenticator";
+import EmailValidator from "../services/EmailValidator";
 import { hashManage } from "../services/HashManage";
 import IdGenerator from "../services/IdGenerator";
 
@@ -10,6 +11,9 @@ class StudentsBusiness {
     
             if (!signup.email || !signup.password) {
                 throw new Error('"email" and "password" must be provided')
+            }
+            if(!EmailValidator.check(signup.email)){
+                throw new Error('Invalid email')
             }
        
             const cypherPassword: string = await hashManage.hash(signup.password);
