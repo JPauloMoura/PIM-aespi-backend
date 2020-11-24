@@ -15,7 +15,7 @@ class StudentsDataBase extends BaseDataBase{
             }).into(this.tableName)
             
         } catch (error) {
-            throw new Error(error.sqlMessage);   
+            throw new Error(error);   
         }
     }
 

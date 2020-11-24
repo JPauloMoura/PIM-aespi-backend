@@ -20,6 +20,9 @@ class StudentsController {
          } catch (error) {
             res.statusCode = 400
             let message = error.sqlMessage || error.message
+            if(message.includes("duplicate")){
+                message = "Student already registered"
+            }
       
             res.send({ message })
          }

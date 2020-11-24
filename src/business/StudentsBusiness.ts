@@ -29,9 +29,6 @@ class StudentsBusiness {
             return token
     
         } catch (error) {
-            if(error.sqlMessage.includes("Duplicate entry")){
-                throw new Error("Registered student")
-            }
             throw new Error(error)
         }
     }
