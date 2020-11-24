@@ -19,6 +19,18 @@ class StudentsDataBase extends BaseDataBase{
         }
     }
 
+    public async getStudentByEmail (email: string):Promise<any> {
+        try {
+            const [student] = await BaseDataBase.connection
+                        .select("*")
+                        .from(this.tableName)
+                        .where({ email })
+            return student
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
 }
 
 export const studentsDataBase: StudentsDataBase = new StudentsDataBase()
