@@ -4,7 +4,8 @@
 import express, { Express } from "express"
 import cors from "cors"
 import { AddressInfo } from "net"
-import { studentsRouter } from "./routes/StudentsRoutes"
+import { usersRouter } from "./routes/UsersRoutes"
+
 
 /**************************** CONFIG ******************************/
 
@@ -14,7 +15,7 @@ app.use(cors())
 
 /**************************** ENDPOINTS ******************************/
 
-app.use("/students", studentsRouter);
+app.use("/users", usersRouter);
 
 /**************************** SERVER INIT ******************************/
 
