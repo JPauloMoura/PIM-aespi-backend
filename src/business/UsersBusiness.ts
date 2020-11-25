@@ -8,9 +8,9 @@ import IdGenerator from "../services/IdGenerator";
 class UsersBusiness {
     public async signup (signup:inputUsers): Promise<string> {
         try {
-            console.count();
+          
             if (!signup.email || !signup.password || !signup.role) {
-                console.count();
+               
                 throw new Error('"email", "role" and "password" must be provided')
             }
             if(!EmailValidator.check(signup.email)){
