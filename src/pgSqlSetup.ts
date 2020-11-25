@@ -4,7 +4,7 @@ class CreateTable extends BaseDataBase{
    async createTables(){
       try {
          await BaseDataBase.connection.raw(`
-            CREATE TYPE TYPE_USER AS ENUM ('students','teaches','admin');
+            CREATE TYPE TYPE_USER AS ENUM ('student','teacher','admin');
             CREATE TABLE IF NOT EXISTS users(
                id VARCHAR(255) PRIMARY KEY,
                email VARCHAR(255) NOT NULL UNIQUE,
