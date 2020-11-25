@@ -4,37 +4,21 @@ class CreateTable extends BaseDataBase{
    async createTables(){
       try {
          await BaseDataBase.connection.raw(`
-             CREATE TABLE IF NOT EXISTS students(
-                 id VARCHAR(255) PRIMARY KEY,
-                 email VARCHAR(255) NOT NULL UNIQUE,
-                 password VARCHAR(255) NOT NULL,
-                 questionnaire_answered BOOLEAN DEFAULT false
-             );
-         `)
-   
-         await BaseDataBase.connection.raw(`
-            CREATE TABLE IF NOT EXISTS teaches(
-                id VARCHAR(255) PRIMARY KEY,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL,
-                questionnaire_answered BOOLEAN DEFAULT false
+            CREATE TYPE TYPE_USER AS ENUM ('students','teaches','admin');
+            CREATE TABLE IF NOT EXISTS users(
+               id VARCHAR(255) PRIMARY KEY,
+               email VARCHAR(255) NOT NULL UNIQUE,
+               password VARCHAR(255) NOT NULL,
+               role TYPE_USER NOT NULL,
+               questionnaire_answered BOOLEAN DEFAULT false
             );
          `)
 
          await BaseDataBase.connection.raw(`
-            CREATE TABLE IF NOT EXISTS admin(
-                id VARCHAR(255) PRIMARY KEY,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL
-            );
-         `)
-
-         await BaseDataBase.connection.raw(`
-            CREATE TYPE TYPE_USER AS ENUM ('students','teaches');
             CREATE TABLE IF NOT EXISTS questionnaires(
                 id VARCHAR(255) PRIMARY KEY,
                 question TEXT NOT NULL UNIQUE,
-                t_user TYPE_USER NOT NULL
+                role TYPE_USER NOT NULL
             );
          `)
 
