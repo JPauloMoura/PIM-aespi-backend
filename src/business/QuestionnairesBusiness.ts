@@ -33,7 +33,8 @@ class QuestionnairesBusiness {
             if(message.includes("jwt expired")){
                 throw new CustomError(400, "Token expired");
             }
-            if(message.includes("jwt malformed")){
+
+            if(message.includes("jwt malformed") || message.includes("invalid signature")){
                 throw new CustomError(400, "Invalid token");
             }
             if(message.includes("must be provided")){
