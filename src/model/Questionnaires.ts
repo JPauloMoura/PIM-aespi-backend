@@ -1,4 +1,4 @@
-export class Questionnaire {
+export class Questionnaires {
     constructor(
        private id: string,
        private question: string,
@@ -26,7 +26,8 @@ export class Questionnaire {
 
 export interface inputQuestion {
     text:string,
-    role: TypeUser
+    role: TypeUser,
+    token: string
 }
 
 export enum TypeUser {
