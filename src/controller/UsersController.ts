@@ -15,7 +15,6 @@ class UsersController {
                 role: req.body.role
             }
      
-console.count();
             const token:string = await UsersBusiness.signup(signup)
            
             res.status(201).send({ message, token })

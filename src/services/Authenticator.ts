@@ -13,15 +13,20 @@ class Authenticator {
     }
 
    public getTokenData(token: string): AuthenticationData {
-        const result: any = jwt.verify(
-           token,
-           process.env.JWT_KEY as string
-        )
-     
-        return { 
-           id: result.id,
-           role: result.role
-         }
+      try {
+         const result: any = jwt.verify(
+            token,
+            process.env.JWT_KEY as string
+         )
+      
+         return { 
+            id: result.id,
+            role: result.role
+          }
+      } catch (error) {
+         throw new Error(error);
+      }
+        
      }
 }
 
