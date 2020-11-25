@@ -1,4 +1,5 @@
 import * as jwt from "jsonwebtoken"
+import { TypeUser } from "../model/Users"
 
 class Authenticator {
    public generateToken ( payload: AuthenticationData): string {
@@ -17,12 +18,16 @@ class Authenticator {
            process.env.JWT_KEY as string
         )
      
-        return { id: result.id, }
+        return { 
+           id: result.id,
+           role: result.role
+         }
      }
 }
 
 export interface AuthenticationData {
    id: string
+   role: TypeUser
 }
 
 export default new Authenticator()
