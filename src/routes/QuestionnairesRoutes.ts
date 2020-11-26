@@ -3,4 +3,5 @@ import QuestionnairesController from "../controller/QuestionnairesController";
 
 export const questionnairesRouter = express.Router();
 
-questionnairesRouter.post("/", QuestionnairesController.createPost)
+questionnairesRouter.post("/", QuestionnairesController.createQuestion)
+questionnairesRouter.get("/list", QuestionnairesController.getQuestionsByRole)
