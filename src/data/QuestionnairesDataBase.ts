@@ -34,7 +34,6 @@ class QuestionnairesDataBase extends BaseDataBase{
     }
 
     public async getAllQuestions () {
-        
         try {
            return await BaseDataBase
                     .connection.select("*")
