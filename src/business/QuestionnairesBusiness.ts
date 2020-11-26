@@ -1,6 +1,8 @@
 import { questionnairesDataBase } from "../data/QuestionnairesDataBase";
 import { CustomError } from "../errors/CustomErrors";
 import { inputQuestion, Questionnaires } from "../model/Questionnaires";
+import { inputSearch } from "../model/Questionnaires";
+import { TypeUser } from "../model/Users";
 import Authenticator, { AuthenticationData } from "../services/Authenticator";
 import IdGenerator from "../services/IdGenerator";
 
@@ -27,6 +29,45 @@ class QuestionnairesBusiness {
 
             await questionnairesDataBase.createQuestion(newQuestion)
     
+        } catch (error) {
+            let message = error.message || error.sqlMessage
+
+            if(message.includes("jwt expired")){
+                throw new CustomError(400, "Token expired");
+            }
+
+            if(message.includes("jwt malformed") || message.includes("invalid signature")){
+                throw new CustomError(400, "Invalid token");
+            }
+            if(message.includes("must be provided")){
+                throw new CustomError(400, "invalid request body: {text, role}");
+            }
+            if(message.includes("violates unique")){
+                throw new CustomError(400, "question already registered");
+            }
+
+            throw new CustomError(400, message);
+        }
+    }
+
+    public async getQuestionByRole(token: string) {
+        try {
+            if(!token) throw new CustomError(400,"Invalid token")
+
+            const infoUser : AuthenticationData = Authenticator.getTokenData(token)
+
+            if(!infoUser.role){
+                throw new CustomError(400,"Invalid token");
+            }
+
+            if(infoUser.role === "admin"){
+                const questions:Questionnaires[] = await questionnairesDataBase.getAllQuestions()
+                return questions
+            }
+
+            const questions:Questionnaires[] = await questionnairesDataBase.getQuestionByRole(infoUser.role)
+            return questions
+
         } catch (error) {
             let message = error.message || error.sqlMessage
 

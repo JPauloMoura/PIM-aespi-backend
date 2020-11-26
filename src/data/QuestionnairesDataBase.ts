@@ -1,4 +1,5 @@
 import { Questionnaires } from "../model/Questionnaires";
+import { TypeUser } from "../model/Users";
 import BaseDataBase from "./BaseDataBase";
 
 class QuestionnairesDataBase extends BaseDataBase{
@@ -13,6 +14,31 @@ class QuestionnairesDataBase extends BaseDataBase{
                 question: question.getQuestion(),
                 role: question.getRole(),
             }).into(this.tableName)
+               
+        } catch (error) {
+            throw new Error(error);   
+        }
+    }
+
+    public async getQuestionByRole (role: TypeUser) {
+        
+        try {
+           return await BaseDataBase
+                .connection.select("*")
+                .from(this.tableName)
+                .where({ role })
+               
+        } catch (error) {
+            throw new Error(error);   
+        }
+    }
+
+    public async getAllQuestions () {
+        
+        try {
+           return await BaseDataBase
+                    .connection.select("*")
+                    .from(this.tableName)
                
         } catch (error) {
             throw new Error(error);   

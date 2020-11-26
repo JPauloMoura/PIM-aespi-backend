@@ -30,6 +30,11 @@ export interface inputQuestion {
     token: string
 }
 
+export interface inputSearch {
+    role: TypeUser,
+    token: string
+}
+
 export enum TypeUser {
     STUDENT = "student",
     TEACHER = "teacher",
