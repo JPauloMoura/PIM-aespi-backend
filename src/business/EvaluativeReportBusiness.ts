@@ -10,7 +10,9 @@ class EvaluativeReportBusiness {
             if (!resp.idQuestion || !resp.typeResponse) {
                 throw new CustomError(400,'"id" and "role" must be provided')
             }
-            if(!(resp.typeResponse.toUpperCase() in TypeResponse)){
+            if(!(resp.typeResponse.toUpperCase() in TypeResponse) &&
+                 resp.typeResponse.toLowerCase() !== "very bad"
+            ){
                 throw new Error("Invalid typeResponse: choose 'great', 'good', 'bad' or 'very bad'");
             }
             
@@ -35,10 +37,13 @@ class EvaluativeReportBusiness {
                 throw new CustomError(400, "Invalid token");
             }
             if(message.includes("must be provided")){
-                throw new CustomError(400, "invalid request body: {text, role}");
+                throw new CustomError(400, "invalid request body: {idQuestion, typeResponse}");
             }
             if(message.includes("violates unique")){
                 throw new CustomError(400, "question already registered");
+            }
+            if(message.includes("violates foreign key constraint")){
+                throw new CustomError(400, "the question ID is invalid");
             }
 
             throw new CustomError(400, message);
