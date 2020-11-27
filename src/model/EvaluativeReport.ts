@@ -33,7 +33,7 @@ export enum TypeResponse {
 }
 
 export interface inputResponseQuestion {
-    id: string,
+    idQuestion: string,
     typeResponse: TypeResponse,
     token: string
 }

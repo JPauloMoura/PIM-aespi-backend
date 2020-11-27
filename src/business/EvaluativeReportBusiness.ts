@@ -7,7 +7,7 @@ class EvaluativeReportBusiness {
     public async addResponseQuestion (resp:inputResponseQuestion): Promise<void> {
         try {
           
-            if (!resp.id || !resp.typeResponse) {
+            if (!resp.idQuestion || !resp.typeResponse) {
                 throw new CustomError(400,'"id" and "role" must be provided')
             }
             if(!(resp.typeResponse.toUpperCase() in TypeResponse)){
@@ -20,7 +20,7 @@ class EvaluativeReportBusiness {
     
             if(!(user.id)) throw new CustomError(400,"Invalid Token");
     
-            const newResponse: EvaluativeReport = new EvaluativeReport(resp.id, resp.typeResponse)
+            const newResponse: EvaluativeReport = new EvaluativeReport(resp.idQuestion, resp.typeResponse)
 
             await evaluativeReportDataBase.addResponse(newResponse)
     
