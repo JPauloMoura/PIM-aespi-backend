@@ -6,6 +6,7 @@ import cors from "cors"
 import { AddressInfo } from "net"
 import { usersRouter } from "./routes/UsersRoutes"
 import { questionnairesRouter } from "./routes/QuestionnairesRoutes"
+import { evaluativeReportRouter } from "./routes/EvaluativeReportRoutes"
 
 
 /**************************** CONFIG ******************************/
@@ -18,6 +19,7 @@ app.use(cors())
 
 app.use("/users", usersRouter);
 app.use("/questionnaires", questionnairesRouter);
+app.use("/evaluative-report", evaluativeReportRouter);
 
 /**************************** SERVER INIT ******************************/
 
