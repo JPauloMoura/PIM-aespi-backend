@@ -1,9 +1,9 @@
-import BaseDataBase from "./data/BaseDataBase"
+import {BaseDataBase} from "./data/BaseDataBase"
 
 class CreateTable extends BaseDataBase{
    async createTables(){
       try {
-         await BaseDataBase.connection.raw(`
+         await this.getConnection().raw(`
             CREATE TYPE TYPE_USER AS ENUM ('student','teacher','admin');
             CREATE TABLE IF NOT EXISTS users(
                id VARCHAR(255) PRIMARY KEY,
@@ -14,7 +14,7 @@ class CreateTable extends BaseDataBase{
             );
          `)
 
-         await BaseDataBase.connection.raw(`
+         await this.getConnection().raw(`
             CREATE TABLE IF NOT EXISTS questionnaires(
                 id VARCHAR(255) PRIMARY KEY,
                 question TEXT NOT NULL UNIQUE,
@@ -22,7 +22,7 @@ class CreateTable extends BaseDataBase{
             );
          `)
 
-         await BaseDataBase.connection.raw(`
+         await this.getConnection().raw(`
             CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'bad', 'very bad');
             CREATE TABLE IF NOT EXISTS evaluative_report(
                 id_question VARCHAR(255) NOT NULL,

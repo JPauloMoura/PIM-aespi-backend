@@ -17,7 +17,7 @@ class QuestionnairesBusiness {
             const user: AuthenticationData = Authenticator.getTokenData(question.token)
     
             if(!(user.id)) throw new CustomError(400,"Invalid Token");
-            if(!(user.role === "admin")) throw new CustomError(400,"You do not have ADMIN permission");
+            if(!(user.role === "admin")) throw new CustomError(403,"You do not have ADMIN permission");
     
             const newQuestion: Questionnaires = new Questionnaires(
                 IdGenerator.generateId(),
@@ -38,10 +38,10 @@ class QuestionnairesBusiness {
                 throw new CustomError(400, "Invalid token");
             }
             if(message.includes("must be provided")){
-                throw new CustomError(400, "invalid request body: {text, role}");
+                throw new CustomError(203, "invalid request body: {text, role}");
             }
             if(message.includes("violates unique")){
-                throw new CustomError(400, "question already registered");
+                throw new CustomError(406, "question already registered");
             }
 
             throw new CustomError(400, message);

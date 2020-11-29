@@ -44,6 +44,11 @@ export interface inputGetReport {
     role: TypeUser,
     token: string
 }
+export interface inputGetReportFilter {
+    role: TypeUser,
+    idQuestion: string
+    token: string
+}
 
 export interface outPutReport {
     id: string,
