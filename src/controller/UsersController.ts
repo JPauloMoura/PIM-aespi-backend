@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import UsersBusiness from "../business/UsersBusiness"
+import { BaseDataBase } from "../data/BaseDataBase"
 import { inputUsers, TypeUser } from "../model/Users"
 
 
@@ -32,6 +33,7 @@ class UsersController {
             }
             res.send({ message })
          }
+         await BaseDataBase.destroyConnection()
     }
 
     public  async login (req: Request, res: Response):Promise<void> {
@@ -59,6 +61,7 @@ class UsersController {
      
               res.send({ message })
            }
+           await BaseDataBase.destroyConnection()
     }
 
 }

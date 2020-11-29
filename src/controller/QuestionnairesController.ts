@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import QuestionnairesBusiness from "../business/QuestionnairesBusiness"
+import { BaseDataBase } from "../data/BaseDataBase"
 import { inputQuestion, Questionnaires } from "../model/Questionnaires"
 import { TypeUser } from "../model/Users"
 
@@ -24,6 +25,7 @@ class QuestionnairesController {
             res.send({ message })
         }
 
+        await BaseDataBase.destroyConnection()
     }
 
     public async getQuestionsByRole (req: Request, res: Response):Promise<void> {
@@ -39,7 +41,7 @@ class QuestionnairesController {
             res.statusCode = 400
             res.send({ message })
         }
-
+        await BaseDataBase.destroyConnection()
     }
 }
 

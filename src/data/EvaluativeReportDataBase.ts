@@ -1,5 +1,4 @@
-import { EvaluativeReport } from "../model/EvaluativeReport";
-import BaseDataBase from "./BaseDataBase";
+import {BaseDataBase} from "./BaseDataBase";
 
 class EvaluativeReportDataBase extends BaseDataBase{
     private tableName: string = "evaluative_report"
@@ -7,12 +6,16 @@ class EvaluativeReportDataBase extends BaseDataBase{
     public async addResponse (resp: EvaluativeReport) {
         
         try {
-            await BaseDataBase.connection
+            await this.getConnection()
             .insert({
                 id_question: resp.getIdQuestion(),
                 response: resp.getResponse(),
             }).into(this.tableName)
                
+        } catch (error) {
+            throw new Error(error);   
+        }
+    }
         } catch (error) {
             throw new Error(error);   
         }
