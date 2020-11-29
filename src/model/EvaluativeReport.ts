@@ -1,3 +1,5 @@
+import { TypeUser } from "./Users";
+
 export class EvaluativeReport {
     constructor(
        private idQuestion: string,
@@ -36,4 +38,32 @@ export interface inputResponseQuestion {
     idQuestion: string,
     typeResponse: TypeResponse,
     token: string
+}
+
+export interface inputGetReport {
+    role: TypeUser,
+    token: string
+}
+
+export interface outPutReport {
+    id: string,
+    question:string,
+    role: TypeUser,
+    response: TypeResponse
+}
+
+export interface outPutReportFormatted {
+    totalResponses: number,
+    qttResponses: {
+        GREAT: number,
+        GOOD: number,
+        BAD: number,
+        VERY_BAD: number
+    },
+    "percentage(%)": {
+        GREAT: number,
+        GOOD: number,
+        BAD: number,
+        VERY_BAD: number
+    } 
 }

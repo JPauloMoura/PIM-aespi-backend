@@ -1,3 +1,5 @@
+import { EvaluativeReport } from "../model/EvaluativeReport";
+import { TypeUser } from "../model/Users";
 import {BaseDataBase} from "./BaseDataBase";
 
 class EvaluativeReportDataBase extends BaseDataBase{
@@ -16,9 +18,24 @@ class EvaluativeReportDataBase extends BaseDataBase{
             throw new Error(error);   
         }
     }
+
+    public async getReport (role: TypeUser ) {
+        
+        try {
+          const ttResp =  await this.getConnection().raw(`
+            SELECT q.id AS "id", q.question AS "question",
+            q.role AS "role", e.response AS "response"  
+            FROM evaluative_report AS e
+            JOIN questionnaires AS q
+            ON e.id_question = q.id
+            WHERE q.role = '${role}';
+          `)
+
+            return ttResp.rows
+            
         } catch (error) {
             throw new Error(error);   
-        }
+        } 
     }
 }
 
