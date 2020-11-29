@@ -3,7 +3,6 @@ import UsersBusiness from "../business/UsersBusiness"
 import { BaseDataBase } from "../data/BaseDataBase"
 import { inputUsers, TypeUser } from "../model/Users"
 
-
 class UsersController {
     public async signup (req: Request, res: Response): Promise<void> {
         try {
@@ -57,10 +56,9 @@ class UsersController {
               if(message.includes("must be provided")){
                 message = "invalid request body: {email, password, role}"
               }
-
-     
+    
               res.send({ message })
-           }
+           } 
            await BaseDataBase.destroyConnection()
     }
 
