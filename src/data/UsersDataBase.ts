@@ -1,5 +1,5 @@
 import { Users } from "../model/Users";
-import BaseDataBase from "./BaseDataBase";
+import {BaseDataBase} from "./BaseDataBase";
 
 class UsersDataBase extends BaseDataBase{
     private tableName: string = "users"
@@ -7,7 +7,7 @@ class UsersDataBase extends BaseDataBase{
     public async createUser (user: Users) {
         
         try {
-            await BaseDataBase.connection
+            await this.getConnection()
             .insert({
                 id: user.getId(),
                 email: user.getEmail(),
@@ -23,7 +23,7 @@ class UsersDataBase extends BaseDataBase{
 
     public async getUserByEmail (email: string):Promise<any> {
         try {
-            const [user] = await BaseDataBase.connection
+            const [user] = await this.getConnection()
                         .select("*")
                         .from(this.tableName)
                         .where({ email })

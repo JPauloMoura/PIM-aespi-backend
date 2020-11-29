@@ -1,8 +1,6 @@
 import { questionnairesDataBase } from "../data/QuestionnairesDataBase";
 import { CustomError } from "../errors/CustomErrors";
 import { inputQuestion, Questionnaires } from "../model/Questionnaires";
-import { inputSearch } from "../model/Questionnaires";
-import { TypeUser } from "../model/Users";
 import Authenticator, { AuthenticationData } from "../services/Authenticator";
 import IdGenerator from "../services/IdGenerator";
 

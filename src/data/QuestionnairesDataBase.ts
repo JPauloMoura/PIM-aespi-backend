@@ -1,6 +1,6 @@
 import { Questionnaires } from "../model/Questionnaires";
 import { TypeUser } from "../model/Users";
-import BaseDataBase from "./BaseDataBase";
+import {BaseDataBase} from "./BaseDataBase";
 
 class QuestionnairesDataBase extends BaseDataBase{
     private tableName: string = "questionnaires"
@@ -8,7 +8,7 @@ class QuestionnairesDataBase extends BaseDataBase{
     public async createQuestion (question: Questionnaires) {
         
         try {
-            await BaseDataBase.connection
+            await this.getConnection()
             .insert({
                 id: question.getId(),
                 question: question.getQuestion(),
@@ -23,8 +23,8 @@ class QuestionnairesDataBase extends BaseDataBase{
     public async getQuestionByRole (role: TypeUser) {
         
         try {
-           return await BaseDataBase
-                .connection.select("*")
+           return await this.getConnection()
+                .select("*")
                 .from(this.tableName)
                 .where({ role })
                
@@ -35,8 +35,8 @@ class QuestionnairesDataBase extends BaseDataBase{
 
     public async getAllQuestions () {
         try {
-           return await BaseDataBase
-                    .connection.select("*")
+           return await this.getConnection()
+                    .select("*")
                     .from(this.tableName)
                
         } catch (error) {
