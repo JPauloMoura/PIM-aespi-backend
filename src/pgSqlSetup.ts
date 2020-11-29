@@ -1,44 +1,28 @@
-import BaseDataBase from "./data/BaseDataBase"
+import {BaseDataBase} from "./data/BaseDataBase"
 
 class CreateTable extends BaseDataBase{
    async createTables(){
       try {
-         await BaseDataBase.connection.raw(`
-             CREATE TABLE IF NOT EXISTS pupils(
-                 id VARCHAR(255) PRIMARY KEY,
-                 email VARCHAR(255) NOT NULL UNIQUE,
-                 password VARCHAR(255) NOT NULL,
-                 questionnaire_answered BOOLEAN DEFAULT false
-             );
-         `)
-   
-         await BaseDataBase.connection.raw(`
-            CREATE TABLE IF NOT EXISTS teaches(
-                id VARCHAR(255) PRIMARY KEY,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL,
-                questionnaire_answered BOOLEAN DEFAULT false
+         await this.getConnection().raw(`
+            CREATE TYPE TYPE_USER AS ENUM ('student','teacher','admin');
+            CREATE TABLE IF NOT EXISTS users(
+               id VARCHAR(255) PRIMARY KEY,
+               email VARCHAR(255) NOT NULL UNIQUE,
+               password VARCHAR(255) NOT NULL,
+               role TYPE_USER NOT NULL,
+               questionnaire_answered BOOLEAN DEFAULT false
             );
          `)
 
-         await BaseDataBase.connection.raw(`
-            CREATE TABLE IF NOT EXISTS admin(
-                id VARCHAR(255) PRIMARY KEY,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL
-            );
-         `)
-
-         await BaseDataBase.connection.raw(`
-            CREATE TYPE TYPE_USER AS ENUM ('pupils','teaches');
+         await this.getConnection().raw(`
             CREATE TABLE IF NOT EXISTS questionnaires(
                 id VARCHAR(255) PRIMARY KEY,
                 question TEXT NOT NULL UNIQUE,
-                t_user TYPE_USER NOT NULL
+                role TYPE_USER NOT NULL
             );
          `)
 
-         await BaseDataBase.connection.raw(`
+         await this.getConnection().raw(`
             CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'bad', 'very bad');
             CREATE TABLE IF NOT EXISTS evaluative_report(
                 id_question VARCHAR(255) NOT NULL,
