@@ -1,7 +1,7 @@
 import { usersDataBase } from "../data/UsersDataBase";
 import { CustomError } from "../errors/CustomErrors";
 import { inputUsers, TypeUser, Users } from "../model/Users";
-import Authenticator from "../services/Authenticator";
+import Authenticator, { AuthenticationData } from "../services/Authenticator";
 import EmailValidator from "../services/EmailValidator";
 import { hashManage } from "../services/HashManage";
 import IdGenerator from "../services/IdGenerator";
@@ -67,12 +67,38 @@ class UsersBusiness {
        
             const passwordIsCorrect: boolean = await hashManage.compare(login.password, user.getPassword())
        
-            if (!passwordIsCorrect) throw new CustomError(400,"Invalid credentials")
+            if (!passwordIsCorrect) throw new CustomError(403,"Invalid credentials")
        
             return Authenticator.generateToken({id: user.getId(), role: user.getRole()})
     
         } catch (error) {
             throw new Error(error);
+        }
+    }
+
+    public async changeDoneStatus (token: string): Promise<void> {
+        try {
+
+            if(!token) throw new CustomError(400,"Invalid token");
+    
+            const user: AuthenticationData = Authenticator.getTokenData(token)
+    
+            if(!(user.id)) throw new CustomError(400,"Invalid Token");
+
+            await usersDataBase.changeDoneStatus(user.id)
+
+        } catch (error) {
+            let message = error.message || error.sqlMessage
+
+            if(message.includes("jwt expired")){
+                throw new CustomError(400, "Token expired");
+            }
+
+            if(message.includes("jwt malformed") || message.includes("invalid signature")){
+                throw new CustomError(400, "Invalid token");
+            }
+
+            throw new CustomError(400, message);
         }
     }
 }

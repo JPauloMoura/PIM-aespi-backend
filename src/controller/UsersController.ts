@@ -62,6 +62,25 @@ class UsersController {
            await BaseDataBase.destroyConnection()
     }
 
+    public async changeDoneStatus (req: Request, res: Response):Promise<void> {
+        try {
+            let message = "Success!"
+            const token = req.headers.authorization as string
+    
+            await UsersBusiness.changeDoneStatus(token)
+        
+            res.status(201).send({ message })
+        
+        } catch (error) {
+            let message = error.sqlMessage || error.message
+            res.statusCode = 400
+            res.send({ message })
+        } 
+
+        await BaseDataBase.destroyConnection()
+
+    }
+    
 }
 
 export default new UsersController()

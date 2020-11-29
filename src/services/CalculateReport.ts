@@ -18,10 +18,10 @@ class CalculateReport{
                 VERY_BAD: veryBad
             },
             "percentage(%)": {
-                GREAT: (great/totalResponse)*100,
-                GOOD: (good/totalResponse)*100,
-                BAD: (bad/totalResponse)*100,
-                VERY_BAD: (veryBad/totalResponse)*100
+                GREAT: great && (great/totalResponse)*100 ,
+                GOOD: good && (good/totalResponse)*100 ,
+                BAD: bad && (bad/totalResponse)*100 ,
+                VERY_BAD: veryBad && (veryBad/totalResponse)*100
             } 
         }
 

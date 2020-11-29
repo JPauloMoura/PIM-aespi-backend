@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { inputGetReport, inputResponseQuestion } from "../model/EvaluativeReport"
+import { inputGetReport, inputGetReportFilter, inputResponseQuestion } from "../model/EvaluativeReport"
 import { TypeResponse } from "../model/EvaluativeReport"
 import EvaluativeReportBusiness from "../business/EvaluativeReportBusiness"
 import { TypeUser } from "../model/Users"
@@ -49,7 +49,30 @@ class EvaluativeReportController {
             res.send({ message })
         }
 
+        await BaseDataBase.destroyConnection()
 
+    }
+    
+    public async getReportByQuestionId (req: Request, res: Response):Promise<void> {
+        try {
+            let message = "Success!"
+    
+            const report: inputGetReportFilter = {
+                role: req.params.role as TypeUser,
+                idQuestion: req.query.id as string,
+                token: req.headers.authorization as string,
+            }
+    
+            const listReport = await EvaluativeReportBusiness.getReportByQuestionId(report)
+        
+            res.status(200).send({ message, listReport })
+        
+        } catch (error) {
+            let message = error.sqlMessage || error.message
+            res.statusCode = 400
+            res.send({ message })
+        }
+        await BaseDataBase.destroyConnection()
     }
 }
 
