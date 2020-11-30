@@ -8,47 +8,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const BaseDataBase_1 = __importDefault(require("./data/BaseDataBase"));
-class CreateTable extends BaseDataBase_1.default {
+const BaseDataBase_1 = require("./data/BaseDataBase");
+class CreateTable extends BaseDataBase_1.BaseDataBase {
     createTables() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield BaseDataBase_1.default.connection.raw(`
-             CREATE TABLE IF NOT EXISTS students(
-                 id VARCHAR(255) PRIMARY KEY,
-                 email VARCHAR(255) NOT NULL UNIQUE,
-                 password VARCHAR(255) NOT NULL,
-                 questionnaire_answered BOOLEAN DEFAULT false
-             );
-         `);
-                yield BaseDataBase_1.default.connection.raw(`
-            CREATE TABLE IF NOT EXISTS teaches(
-                id VARCHAR(255) PRIMARY KEY,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL,
-                questionnaire_answered BOOLEAN DEFAULT false
+                yield this.getConnection().raw(`
+            CREATE TYPE TYPE_USER AS ENUM ('student','teacher','admin');
+            CREATE TABLE IF NOT EXISTS users(
+               id VARCHAR(255) PRIMARY KEY,
+               email VARCHAR(255) NOT NULL UNIQUE,
+               password VARCHAR(255) NOT NULL,
+               role TYPE_USER NOT NULL,
+               questionnaire_answered BOOLEAN DEFAULT false
             );
          `);
-                yield BaseDataBase_1.default.connection.raw(`
-            CREATE TABLE IF NOT EXISTS admin(
-                id VARCHAR(255) PRIMARY KEY,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL
-            );
-         `);
-                yield BaseDataBase_1.default.connection.raw(`
-            CREATE TYPE TYPE_USER AS ENUM ('students','teaches');
+                yield this.getConnection().raw(`
             CREATE TABLE IF NOT EXISTS questionnaires(
                 id VARCHAR(255) PRIMARY KEY,
                 question TEXT NOT NULL UNIQUE,
-                t_user TYPE_USER NOT NULL
+                role TYPE_USER NOT NULL
             );
          `);
-                yield BaseDataBase_1.default.connection.raw(`
+                yield this.getConnection().raw(`
             CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'bad', 'very bad');
             CREATE TABLE IF NOT EXISTS evaluative_report(
                 id_question VARCHAR(255) NOT NULL,

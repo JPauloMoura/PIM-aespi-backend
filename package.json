@@ -4,8 +4,8 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "pgsql-setup": "tsc && node ./build/pgSqlSetup.js",
-      "start": "npm run build && node ./build/src/index.js",
+      "pgsql-setup": "node ./build/pgSqlSetup.js",
+      "start": "node ./build/index.js",
       "dev": "clear && ts-node-dev ./src/index.ts",
       "build": "clear && echo \"Transpiling files...\" && tsc && echo \"Done!\" ",
       "test": "jest"
