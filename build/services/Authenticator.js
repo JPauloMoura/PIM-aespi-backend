@@ -27,8 +27,16 @@ class Authenticator {
         });
     }
     getTokenData(token) {
-        const result = jwt.verify(token, process.env.JWT_KEY);
-        return { id: result.id, };
+        try {
+            const result = jwt.verify(token, process.env.JWT_KEY);
+            return {
+                id: result.id,
+                role: result.role
+            };
+        }
+        catch (error) {
+            throw new Error(error);
+        }
     }
 }
 exports.default = new Authenticator();
