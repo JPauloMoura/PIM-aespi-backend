@@ -24,7 +24,8 @@ class BaseDataBase {
                     port: Number(process.env.DP_PORT),
                     user: process.env.DB_USER,
                     password: process.env.DB_PASSWORD,
-                    database: process.env.DB_NAME
+                    database: process.env.DB_NAME,
+                    connectString: process.env.DATABASE_URL
                 },
             });
         }
