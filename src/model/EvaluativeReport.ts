@@ -12,6 +12,9 @@ export class EvaluativeReport {
             case TypeResponse.GOOD:
                 this.response = TypeResponse.GOOD
                 break
+            case TypeResponse.REGULAR:
+                this.response = TypeResponse.REGULAR
+                break
             case TypeResponse.BAD:
                 this.response = TypeResponse.BAD
                 break
@@ -19,7 +22,7 @@ export class EvaluativeReport {
                 this.response = TypeResponse.VERY_BAD
                 break
             default:
-                throw new Error("Invalid typeResponse: choose 'great', 'good', 'bad' or 'very bad'");
+                throw new Error("Invalid typeResponse: choose 'great', 'good', 'regular', 'bad' or 'very bad'");
         }
      }
 
@@ -30,6 +33,7 @@ export class EvaluativeReport {
 export enum TypeResponse {
   GREAT = "great",
   GOOD = "good",
+  REGULAR = "regular",
   BAD = "bad",
   VERY_BAD = "very bad"
 }
@@ -62,12 +66,14 @@ export interface outPutReportFormatted {
     qttResponses: {
         GREAT: number,
         GOOD: number,
+        REGULAR: number,
         BAD: number,
         VERY_BAD: number
     },
     "percentage(%)": {
         GREAT: number,
         GOOD: number,
+        REGULAR: number,
         BAD: number,
         VERY_BAD: number
     } 

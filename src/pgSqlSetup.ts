@@ -23,7 +23,7 @@ class CreateTable extends BaseDataBase{
          `)
 
          await this.getConnection().raw(`
-            CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'bad', 'very bad');
+            CREATE TYPE TYPE_RESPONSE AS ENUM ('great', 'good', 'regular', 'bad', 'very bad');
             CREATE TABLE IF NOT EXISTS evaluative_report(
                 id_question VARCHAR(255) NOT NULL,
                 response TYPE_RESPONSE NOT NULL,
