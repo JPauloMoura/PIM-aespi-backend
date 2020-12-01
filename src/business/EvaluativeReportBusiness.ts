@@ -16,7 +16,7 @@ class EvaluativeReportBusiness {
             if(!(resp.typeResponse.toUpperCase() in TypeResponse) &&
                  resp.typeResponse.toLowerCase() !== "very bad"
             ){
-                throw new CustomError(400,"Invalid typeResponse: choose 'great', 'good', 'bad' or 'very bad'");
+                throw new CustomError(400,"Invalid typeResponse: choose 'great', 'good', 'regular', 'bad' or 'very bad'");
             }
             
             if(!resp.token) throw new CustomError(401,"Invalid token");
